@@ -1,0 +1,13 @@
+{
+  "name": "hello-money",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers/features/go:1": {
+            "version": "1.18"
+        },
+    "ghcr.io/devcontainers-contrib/features/vscode-server:1": {
+            "version": "latest",
+            "moby": true
+        }
+  }
+}
