@@ -13,10 +13,10 @@ export const AuthProvider = ({ children }) => {
             try {
                 const response = await axios.post('/api/auth/login', { username, password });
                 localStorage.setItem('token', response.data.token);
-                setIsAuthentiacted(true);
+                setIsAuthenticated(true);
                 history.push('/account');
             } catch (error) {
-                console.error('Login Failed, Please try again or click 'Forgot Password' button below!', error);
+                console.error('Login Failed:', error);
             }
         };
 
