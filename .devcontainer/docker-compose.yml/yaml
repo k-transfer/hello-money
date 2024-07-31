@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+    node:
+        image: node:14
+        volumes:
+        - .:/workspace
+        - /workspace/node_modules
+        working_dir: /workspace
+        command: bash -c "while sleep 1000; do :; done"
+        ports:
+            - "3000:3000"
+        depends_on:
+            - db
+
+db:
+    image: postgres:13
+    environment:
+        POSTGRES_USER: username
+        POSTGRES_PASSWORD: password
+        POSTGRES_DB: hello-money
+    ports:
+        - "5432:5432"
+    volumes:
+        - db-data:/var/lib/postgresql/data
+
+    volumes:
+        db-data:
