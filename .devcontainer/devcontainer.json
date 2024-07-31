@@ -4,15 +4,13 @@
   "service": "node",
   "workspaceFolder": "/workspace",
   "customizations": {
-    "terminal.integrated.shell.linux": "/bin/bash"
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "dbaeumer.vscode-eslint"
+    :"esbenp.prettier-vscode"
+    ,"ms-azuretools.vscode-docker"
+    :"ms-vscode.vscode-typescript-tslint-plugin"
   },
-  "customizations/extentions": [
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "ms-azuretools.vscode-docker",
-    "ms-vscode.vscode-typescript-tslint-plugin"
-  ],
-  "forwardPorts": [
+  "forwardPorts":[
     3000,
     5432
   ],
