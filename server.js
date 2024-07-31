@@ -1,5 +1,5 @@
-import express, { static } from 'express';
-import { urlencoded } from 'body-parser';
+const express = require('express');
+const bodyParser = require('body-parser');
 const db = require('./models');
 const authRoutes = require('./routes/authRoutes');
 const accountRoutes = require('./routes/accountRoutes');
