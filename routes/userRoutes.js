@@ -1,34 +1,34 @@
-const express = require("express");
-const router = express.Router();
-const uuid = require("uuid");
+import { Router } from "express";
+const router = Router();
+import { v4 } from "uuid";
 
-let users = require("../../Users"); 
+import users, { some, filter, push, forEach } from "../../Users"; 
 router.get("/", (req, res) => {  
     res.json(users);}); 
 
     router.get("/:id", (req, res) => {  
-        const found = users.some(user => user.id === parseInt(req.params.id));   
+        const found = some(user => user.id === parseInt(req.params.id));   
         if (found) {    
-            res.json(users.filter(user => user.id === parseInt(req.params.id)));  
+            res.json(filter(user => user.id === parseInt(req.params.id)));  
         } else {    
             res.sendStatus(400);  }}); 
             
             router.post("/", (req, res) => {  
                 const newUser = {    
-                    id: uuid.v4(),    
+                    id: v4(),    
                     name: req.body.name,    
                     email: req.body.email  };   
                     if (!newUser.name || !newUser.email) {   
                          return res.sendStatus(400);  }  
-                         users.push(newUser);  
+                         push(newUser);  
                          res.json(users);});
                          
 //Update 
 Userrouter.put("/:id", (req, res) => {  
-    const found = users.some(user => user.id === parseInt(req.params.id));  
+    const found = some(user => user.id === parseInt(req.params.id));  
     if (found) {    
         const updateUser = req.body;    
-        users.forEach(user => {      
+        forEach(user => {      
             if (user.id === parseInt(req.params.id)) {        
                 user.name = updateUser.name ? updateUser.name : user.name;       
                 user.email = updateUser.email ? updateUser.email : user.email;        
@@ -42,13 +42,13 @@ Userrouter.put("/:id", (req, res) => {
     
 //Delete 
 Userrouter.delete("/:id", (req, res) => {  
-    const found = users.some(user => user.id === parseInt(req.params.id))  
+    const found = some(user => user.id === parseInt(req.params.id))  
     if (found) {    
-        users = users.filter(user => user.id !== parseInt(req.params.id))    
+        users = filter(user => user.id !== parseInt(req.params.id))    
         res.json({      
             msg: "User deleted", users });  
         } else {    
             res.sendStatus(400);  
         }}); 
         
-        module.exports = router;
+        export default router;
