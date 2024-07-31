@@ -1,14 +1,14 @@
-const db = require('../models');
+import { Account as _Account, Transaction as _Transaction, Sequelize } from '../models';
 
-const Account = db.Account;
-const Transaction = db.Transaction;
+const Account = _Account;
+const Transaction = _Transaction;
 
-exports.transfer = async (req, res) => {
+export async function transfer(req, res) {
     try {
         const { recieverId, amount } = req.body;
         const senderAccount = await Account.findOne({ where: { userId: req.userId } });
         const recieverAccount = await Account.findOne({ where: { id: recieverId } });
-        if (!senderAccount || !receiverAccount) {
+        if (!senderAccount || !recieverAccount) {
             return res.status(404).send({ message: 'Sender or reciever account not found.' });
         }
         
@@ -17,11 +17,11 @@ exports.transfer = async (req, res) => {
         recieverAccount.balance += parseFloat(amount);
 
         await senderAccount.save();
-        await receiverAccount.save();
+        await recieverAccount.save();
 
         const transaction = await Transaction.create({
             senderId: senderAccount.id,
-            receiverId: receiverAccount.id, amount,
+            receiverId: recieverAccount.id, amount,
             currency: senderAccount.currency,
             status: 'completed',
             timestamp: new Date()
@@ -31,16 +31,21 @@ exports.transfer = async (req, res) => {
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
-};
+}
 
-exports.getTransactions = async (req, res) => {
+export async function getTransactions(req, res) {
     try {
         const transactions = await Transaction.findAll({
             where: {
-                [db.Sequelize.Op.or]: [{ senderId: req.userId },
+                [db.Sequelize.Op.or]: [
+                    { senderId: req.userId },
                     { receiverId: req.userId }
                 ]
             }
         });
+
+        res.status(200).send({ transactions });
+    } catch (err){
+        res.status(500).send({ message: err.message });
     }
-}
+};
