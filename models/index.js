@@ -1,17 +1,19 @@
 const { Sequelize } = require('sequelize');
 const config = require('../config/config');
-const sequelize = new Sequelize(config.databaseUrl, {
+new Sequelize(config.databaseUrl, {
     dialect: 'postgres',
 });
 
+import Sequelize from 'sequelize';
+
 const db = {};
 db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+db.sequelize = Sequelize;
 
 //Import models
 db.User = require('./user')(sequelize, Sequelize);
 db.Account = require('./account')(sequelize, Sequelize);
-db.Transaction = require('./transaction')(sequelize, Sequelize);
+db.Transaction = require('./transaction')(Sequelize, Sequelize);
 
 
 
